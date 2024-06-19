@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% load static %}
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'working.css' %}" />
+</head>
+<body>
+<div class="header">
+    <div class="logo">
+        <img src="{% static 'frame1986.png' %}" alt="logo" width="100" height="50" />
+    </div>
+    <div class="search">
+        <input type="sumbit" placeholder="Search..." />
+        <button>Найти</button>
+    </div>
+    <div class="auth" id="auth-buttons">
+    {% if user %}
+        <a href="cabinet" class="authbutton-link">
+        <span id="user-login" class="authbutton2">{{ user.Login }}</span>
+        </a>
+        <form action="logout/" method="post" id="logout-form">
+            {% csrf_token %}
+            <button type="submit" class="logoutbutton">Выход</button>
+        </form>
+    {% else %}
+        <div class="auth">
+            <a href="go_to_auth" class="authbutton-link">
+                <button class="authbutton">Войти</button>
+            </a>
+            <a href="go_to_reg" class="authbutton-link">
+                <button class="authbutton">Регистрация</button>
+            </a>
+        </div>
+    {% endif %}
+    </div>
+</div>
+
+<div class="container">
+    <div class="sidebar">
+        <h1 class="top-text">ОСНОВНОЕ</h1>
+        <ul class="textmenu">
+            <li><a href="cabinet?session_key={{ request.session.session_key }}">Работа с сервисом</a></li>
+            <li><a href="redirect_services?session_key={{ request.session.session_key }}">Сервисы</a></li>
+            <li><a href="pay?session_key={{ request.session.session_key }}">Тарифы и оплата</a></li>
+            <li><a href="pay?session_key={{ request.session.session_key }}">Аналитика</a></li>
+        </ul>
+        <h1 class="suppport">ДОПОЛНИТЕЛЬНО</h1>
+        <ul class="textmen">
+            <li><a href="#">Поддержка</a></li>
+        </ul>
+    </div>
+
+
+    <div class="content">
+        <h2 class="razblock">Разблокируйте премиальный тариф для бизнеса</h2>
+        <p class="supp">Расширенная поддержка и больше возможностей</p>
+        <button class="mainbutton">Обновить</button>
+    </div>
+</div>
+<div class="undercontent">
+</div>
+<div class="analytics-description">
+    <h2 class="analytics-title">О работе аналитического сервиса</h2>
+    <p class="analytics-text">
+      Аналитический сервис предоставляет полный спектр инструментов для анализа данных, отслеживания трендов и прогнозирования результатов. Мы предлагаем надежное хранение данных, мощные алгоритмы обработки и удобный интерфейс для работы с информацией. Наш сервис помогает компаниям принимать обоснованные решения на основе данных, что повышает их эффективность и конкурентоспособность.
+    </p>
+    <p class="analytitext">
+        Сканер представляет собой уникальное решение для эффективного отслеживания и анализа информации по ключевым параметрам. Независимо от того, ищете ли вы конкретные сообщения, определённые данные или просто следите за определёнными темами, наш бот станет вашим надёжным помощником.
+    </p>
+    <p class="analytitext">
+        Преимущества использования: <br />
+        Гибкость и настраиваемость: Наш бот позволяет настраивать сканирование по вашим параметрам. Вы можете задать ключевые слова, фразы или другие параметры, по которым хотите провести поиск информации. <br />
+        <br />
+        Автоматизация: Бот работает автономно, сканируя поток сообщений в реальном времени и выявляя интересующую вас информацию. Это освобождает вас от необходимости постоянно мониторить чаты или каналы вручную. <br />
+        <br />
+        Точность: Благодаря передовым алгоритмам анализа, наш сканер обеспечивает высокую точность при выявлении информации по вашим параметрам. Конфиденциальность: Ваши данные остаются в безопасности. Мы строго соблюдаем принципы конфиденциальности и обеспечиваем защиту вашей личной информации.<br />
+        <br />
+        <br />
+        Как это работает:
+        <br />
+        <br />
+        Настройка параметров: Вы определяете ключевые параметры, по которым хотите отслеживать информацию.<br />
+        <br />
+        Активация сканирования: После настройки бот начинает сканировать сообщения в выбранных чатах или каналах.<br />
+        <br />
+        Выявление информации: При обнаружении соответствующих сообщений бот уведомляет вас, предоставляя необходимую информацию.<br />
+        <br />
+        Анализ результатов: Вы получаете доступ к отчётам и аналитике по результатам сканирования для дальнейшего анализа и принятия решений.<br />
+    </p>
+  </div>
+<script>
+$(document).ready(function() {
+    $('#logout-form').submit(function(event) {
+        event.preventDefault();
+        $.ajax({
+            url: 'logout',
+            type: 'POST',
+            data: {
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(data) {
+                window.location.replace("{% url 'go_to_auth' %}");
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+});
+</script>
+</body>
+</html>

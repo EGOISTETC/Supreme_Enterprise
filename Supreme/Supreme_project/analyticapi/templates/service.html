@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% load static %}
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="{% static 'service.css' %}" />
+</head>
+<body>
+<div class="header">
+    <div class="logo">
+        <img src='{% static "frame1986.svg" %}' alt="logo" width="100" height="50" />
+    </div>
+    <div class="search">
+        <input type="sumbit" placeholder="Search..." />
+        <button>Найти</button>
+    </div>
+    <div class="auth" id="auth-buttons">
+    {% if user %}
+        <a href="cabinet" class="authbutton-link">
+        <span id="user-login" class="authbutton2">{{ user.Login }}</span>
+             </a>
+        <form action="logout/" method="post" id="logout-form">
+            {% csrf_token %}
+            <button type="submit" class="logoutbutton">Выход</button>
+        </form>
+    {% else %}
+        <div class="auth">
+            <a href="go_to_auth" class="authbutton-link">
+                <button class="authbutton">Войти</button>
+            </a>
+            <a href="go_to_reg" class="authbutton-link">
+                <button class="authbutton">Регистрация</button>
+            </a>
+        </div>
+    {% endif %}
+    </div>
+</div>
+
+<div class="container">
+    <div class="sidebar">
+        <h1 class="top-text">ОСНОВНОЕ</h1>
+        <ul class="textmenu">
+            <li><a href="cabinet?session_key={{ request.session.session_key }}">Работа с сервисом</a></li>
+            <li><a href="redirect_services?session_key={{ request.session.session_key }}">Сервисы</a></li>
+            <li><a href="pay?session_key={{ request.session.session_key }}">Тарифы и оплата</a></li>
+            <li><a href="pay?session_key={{ request.session.session_key }}">Аналитика</a></li>
+        </ul>
+        <h1 class="suppport">ДОПОЛНИТЕЛЬНО</h1>
+        <ul class="textmen">
+            <li><a href="#">Поддержка</a></li>
+        </ul>
+    </div>
+
+    <div class="content">
+        <h2 class="razblock">Разблокируйте премиальный тариф для бизнеса</h2>
+        <p class="supp">Расширенная поддержка и больше возможностей</p>
+        <button class="mainbutton">Обновить</button>
+    </div>
+
+</div>
+
+<div class="undercontent">
+</div>
+
+<div class="analytics-description">
+    <h2 class="analytics-title">Сервисы и инструменты</h2>
+    <h2 class="analytics-title">Здесь представлены все сервисы и инструменты, которые мы предлагаем</h2>
+    <br />
+</div>
+
+<div class="products-container">
+    <div class="product">
+        <h2>Универсальный Парсер</h2>
+        <p>Базовый инструмент, который может работать в универсальном режиме. Отслеживание тематических каналов и групп в мессенджерах, а также в сети интернет</p>
+    </div>
+    <div class="product">
+        <h2>TG Сканер</h2>
+        <p>Продвинутый инструмент для проверки наличия сообщений в Telegram-канале. Специально заточен и оптимизирован для работы с Telegram</p>
+    </div>
+    <div class="product">
+        <h2>Добавим</h2>
+        <p>Доделаем</p>
+    </div>
+    <div class="product">
+        <h2>Чето надо придумать</h2>
+        <p>Тут тоже</p>
+    </div>
+</div>
+<script>
+$(document).ready(function() {
+    $('#logout-form').submit(function(event) {
+        event.preventDefault();
+        $.ajax({
+            url: 'logout',
+            type: 'POST',
+            data: {
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(data) {
+                window.location.replace("{% url 'go_to_auth' %}");
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+});
+</script>
+</body>
+</html>

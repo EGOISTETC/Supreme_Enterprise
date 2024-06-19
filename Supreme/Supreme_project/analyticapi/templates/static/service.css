@@ -1,0 +1,286 @@
+@font-face {
+  font-family: 'Regular'; 
+  src: url('Inter-Regular.otf');
+}
+
+@font-face {
+  font-family: 'Semi'; 
+  src: url('Inter-SemiBold.otf');
+}
+
+body {
+  background-color: #F2F4F7;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em; /* Используем относительные единицы измерения */
+  background-color: #FFFFFF;
+  color: #FFFFFF;
+}
+
+.logo {
+  width: 10%; /* Используем проценты */
+  height: auto; /* Автоматический расчёт высоты */
+}
+
+.search {
+  flex: 1;
+  margin: 0 2em; /* Используем относительные единицы измерения */
+  padding: 0.5em;
+  border: 1px solid #fff;
+  border-radius: 5px;
+}
+
+.search input {
+  width: 70%;
+  padding: 0.5em;
+  border: none;
+  outline: none;
+  border-radius: 3px;
+  border: 1px solid #EAECF0;
+  height: 25px;
+  margin-left: 2em; /* Используем относительные единицы измерения */
+}
+
+.search button, .authbutton, .mainbutton {
+  background-color: #FFF;
+  color: #333;
+  padding: 0.5em 1em;
+  border: none;
+  border-radius: 17px;
+  cursor: pointer;
+  margin-left: 1em; /* Используем относительные единицы измерения */
+}
+
+.authbutton {
+  border-radius: 10px;
+}
+
+.mainbutton {
+  border-radius: 5px;
+}
+
+.centre {
+  display: flex;
+  justify-content: center;
+}
+
+.main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em;
+}
+
+.container {
+  display: flex;
+  position: relative;
+}
+
+.sidebar {
+  width: 15%; /* Используем проценты */
+  background-color: #FFFFFF;
+  padding: 1em;
+  color: #5F6980;
+  border: 0.5px solid #EAECF0; /* Исправляем ошибку в определении толщины границы */
+}
+
+.sidebar h2 {
+  margin-bottom: 1em; /* Используем относительные единицы измерения */
+  padding-bottom: 0.5em;
+  border-bottom: 1px solid #5F6980;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin-bottom: 0.5em; /* Используем относительные единицы измерения */
+}
+
+.sidebar ul li a {
+  color: #5F6980;
+  text-decoration: none;
+}
+
+.content {
+  position: relative;
+  padding: 1em;
+  background-color: #AFECDA;
+  color: #FFFFFF;
+  border-radius: 17px;
+  width: 60%;
+  height: 50%;
+  border-width: 3%;
+  margin: 1em;
+}
+
+.razblock {
+  padding: 0.5em;
+  margin-left: 2em; /* Используем относительные единицы измерения */
+}
+
+.supp {
+  margin-top: -20px;
+  margin-left: 4em; /* Используем относительные единицы измерения */
+}
+
+.top-text, .suppport {
+  font-size: 1rem; /* Используем относительные единицы измерения */
+  color: #9D9FA1;
+}
+
+.textmenu, .textmen {
+  font-size: 1rem;
+  color: #5F6980;
+  font-weight: bold;
+  line-height: 1.5;
+}
+
+.mainbutton {
+  background-color: #FFFFFF;
+  color: #282828;
+  border-radius: 30px;
+  position: absolute;
+  bottom: 30%; /* Отступ от нижнего края блока .content */
+  right: 5%; /* Отступ от правого края блока .content */
+  height: 50px;
+}
+
+
+/* Сообщения */
+.undercontent {
+  padding: 1%; /* Используем проценты */
+  color: #5F6980;
+  border-radius: 17px;
+  width: 20%; /* Используем проценты */
+  height: 3%; /* Используем проценты */
+  margin-left: 40%; /* Используем проценты */
+  margin-top: 5%; /* Используем проценты */
+  margin-bottom: 15%; /* Используем проценты */
+  position: absolute;
+  bottom: 40%; /* Опускаем блок ниже */
+  left: -16%; /* Смещаем влево */
+}
+
+
+/* Описание */
+.analytics-description {
+  padding: 1em;
+  background-color: #F2F4F7;
+  border-radius: 10px;
+  margin: 0; /* Убираем внешний отступ */
+  text-align: left; /* Выравниваем текст по левому краю */
+  margin-left: 17%; /* Смещаем влево */
+  margin-top: -10%; /* Смещаем вверх */
+  width: 66%; /* Используем проценты для ширины */
+}
+
+.analytics-title {
+  font-size: 1.5em;
+  color: #333;
+  margin-bottom: 0.2em; /* Уменьшаем нижний отступ */
+}
+
+
+/* Тарифы */
+.products-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.product {
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 20px;
+  width: 80%; /* Ширина контейнера */
+  max-width: 500px; /* Максимальная ширина блока */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Тень */
+}
+
+.product h2 {
+  margin-top: 0;
+  font-size: 1.8em;
+  color: #333;
+}
+
+.product p {
+  font-size: 1.2em;
+  color: #666;
+}
+
+/* Медиа-запросы для адаптивности */
+@media (max-width: 768px) {
+  .product {
+      width: 90%; /* Ширина контейнера на мобильных устройствах */
+  }
+}
+
+@media (max-width: 576px) {
+  .product {
+      width: 95%; /* Ширина контейнера на узких мобильных устройствах */
+  }
+}
+
+.authbutton2 {
+position: relative;
+background-color: #fff;
+  color: #333;
+  padding: 0px 0px;
+  border: none;
+  border-radius: 10px;
+  margin-top: 35px;
+  cursor: pointer;
+  margin-left: -65px;
+  top: 8px;
+}
+
+.logoutbutton {
+position: relative;
+  background-color: #fff;
+  color: #333;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 10px;
+  margin-top: -43px;
+  cursor: pointer;
+  margin-left: 10px;
+  top: -10px;
+}
+
+
+.authbutton2 {
+position: relative;
+background-color: #fff;
+  color: #333;
+  padding: 0px 0px;
+  border: none;
+  border-radius: 10px;
+  margin-top: 35px;
+  cursor: pointer;
+  margin-left: -65px;
+  top: 8px;
+}
+
+.logoutbutton {
+position: relative;
+  background-color: #fff;
+  color: #333;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 10px;
+  margin-top: -43px;
+  cursor: pointer;
+  margin-left: 10px;
+  top: -10px;
+}

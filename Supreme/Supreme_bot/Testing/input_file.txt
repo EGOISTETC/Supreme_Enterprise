@@ -1,0 +1,4 @@
+Cannel_group=coffeeCodeEverywhere,stikery4,SQL_Mas
+nums_posts=10
+key_word=Традиционный,SOLID,стикеры,sql,orm
+target_group=@ParserTop

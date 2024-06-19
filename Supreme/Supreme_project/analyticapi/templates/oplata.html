@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% load static %}
+    <title>Document</title>
+    <link rel="stylesheet" href='{% static "oplata.css" %}' />
+</head>
+<body>
+<div class="header">
+    <div class="logo">
+        <img src='{% static "frame1986.svg" %}' alt="logo" width="100" height="50" />
+    </div>
+    <div class="search">
+        <input type="sumbit" placeholder="Search..." />
+        <button>Найти</button>
+    </div>
+    <div class="auth" id="auth-buttons">
+    {% if user %}
+        <a href="cabinet" class="authbutton-link">
+        <span id="user-login" class="authbutton2">{{ user.Login }}</span>
+        </a>
+        <form action="logout/" method="post" id="logout-form">
+            {% csrf_token %}
+            <button type="submit" class="logoutbutton">Выход</button>
+        </form>
+    {% else %}
+        <div class="auth">
+            <a href="go_to_auth" class="authbutton-link">
+                <button class="authbutton">Войти</button>
+            </a>
+            <a href="go_to_reg" class="authbutton-link">
+                <button class="authbutton">Регистрация</button>
+            </a>
+        </div>
+    {% endif %}
+    </div>
+</div>
+
+<div class="container">
+    <div class="sidebar">
+        <h1 class="top-text">ОСНОВНОЕ</h1>
+        <ul class="textmenu">
+            <li><a href="cabinet?session_key={{ request.session.session_key }}">Работа с сервисом</a></li>
+            <li><a href="redirect_services?session_key={{ request.session.session_key }}">Сервисы</a></li>
+            <li><a href="pay?session_key={{ request.session.session_key }}">Тарифы и оплата</a></li>
+            <li><a href="pay?session_key={{ request.session.session_key }}">Аналитика</a></li>
+        </ul>
+        <h1 class="suppport">ДОПОЛНИТЕЛЬНО</h1>
+        <ul class="textmen">
+            <li><a href="#">Поддержка</a></li>
+        </ul>
+    </div>
+
+    <div class="content">
+        <h2 class="razblock">Разблокируйте премиальный тариф для бизнеса</h2>
+        <p class="supp">Расширенная поддержка и больше возможностей</p>
+        <button class="mainbutton">Обновить</button>
+    </div>
+
+</div>
+
+<div class="undercontent">
+
+
+</div>
+
+<div class="analytics-description">
+    <h2 class="analytics-title">Оплата выбранного тарифа</h2>
+    <br />
+</div>
+
+<section class="apr">
+    <div class="apr-item apr-item-left">
+        <div class="apr-deco">
+            <svg class="apr-deco-svg" enable-background="new 0 0 300 100" preserveAspectRatio="none" version="1.1"
+                 viewBox="0 0 300 100" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+                <path class="deco-layer deco-layer--1" d="M30.913,43.944c0,0,42.911-34.464,87.51-14.191c77.31,35.14,113.304-1.952,146.638-4.729&#x000A; c48.654-4.056,69.94,16.218,69.94,16.218v54.396H-35.913V43.944z" opacity="0.6"></path>
+                <path class="deco-layer deco-layer--2" d="M-35.667,44.628c0,0,42.91-34.463,87.51-14.191c77.31,35.141,113.304-1.952,146.639-4.729&#x000A; c48.653-4.055,69.939,16.218,69.939,16.218v54.396H-35.667V44.628z" opacity="0.6"></path>
+                <path class="deco-layer deco-layer--3" d="M43.415,98.342c0,0,48.283-68.927,109.133-68.927c65.886,0,97.983,67.914,97.983,67.914v3.716&#x000A; H42.401L43.415,98.342z" opacity="0.7"></path>
+                <path class="deco-layer deco-layer--4" d="M-34.667,62.998c0,0,56-45.667,120.316-27.839C167.484,57.842,197,41.332,232.286,30.428&#x000A; c53.07-16.399,104.047,36.903,104.047,36.903l1.333,36.667l-372-2.954L-34.667,62.998z"></path>
+            </svg>
+            <div class="apr-price">10 000<span class="apr-currency">&#8381;</span></div>
+            <div class="apr-title">Silver</div>
+        </div>
+        <ul class="apr-feature-list">
+            <li>Базовый функционал сервиса</li>
+            <li>Доступ к техническому блогу</li>
+            <li>Совместный доступ</li>
+        </ul>
+        <button class="apr-action">Заказать</button>
+    </div>
+
+    <div class="apr-item apr-item-center">
+        <div class="apr-deco">
+            <svg class="apr-deco-svg" enable-background="new 0 0 300 100" preserveAspectRatio="none" version="1.1"
+                 viewBox="0 0 300 100" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+                <path class="deco-layer deco-layer--1" d="M30.913,43.944c0,0,42.911-34.464,87.51-14.191c77.31,35.14,113.304-1.952,146.638-4.729&#x000A; c48.654-4.056,69.94,16.218,69.94,16.218v54.396H-35.913V43.944z" opacity="0.6"></path>
+                <path class="deco-layer deco-layer--2" d="M-35.667,44.628c0,0,42.91-34.463,87.51-14.191c77.31,35.141,113.304-1.952,146.639-4.729&#x000A; c48.653-4.055,69.939,16.218,69.939,16.218v54.396H-35.667V44.628z" opacity="0.6"></path>
+                <path class="deco-layer deco-layer--3" d="M43.415,98.342c0,0,48.283-68.927,109.133-68.927c65.886,0,97.983,67.914,97.983,67.914v3.716&#x000A; H42.401L43.415,98.342z" opacity="0.7"></path>
+                <path class="deco-layer deco-layer--4" d="M-34.667,62.998c0,0,56-45.667,120.316-27.839C167.484,57.842,197,41.332,232.286,30.428&#x000A; c53.07-16.399,104.047,36.903,104.047,36.903l1.333,36.667l-372-2.954L-34.667,62.998z"></path>
+            </svg>
+            <div class="apr-price">20 <span>000</span><span class="apr-currency">&#8381;</span></div>
+            <div class="apr-title">Gold</div>
+        </div>
+        <ul class="apr-feature-list">
+            <li>Расширеный функционал сервиса</li>
+            <li>Большинство инструментов</li>
+            <li>Оптимальное качество</li>
+        </ul>
+        <button class="apr-action">Заказать</button>
+    </div>
+    <div class="apr-item apr-item-right">
+        <div class="apr-deco">
+            <svg class="apr-deco-svg" enable-background="new 0 0 300 100" preserveAspectRatio="none" version="1.1"
+                 viewBox="0 0 300 100" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+                <path class="deco-layer deco-layer--1" d="M30.913,43.944c0,0,42.911-34.464,87.51-14.191c77.31,35.14,113.304-1.952,146.638-4.729&#x000A; c48.654-4.056,69.94,16.218,69.94,16.218v54.396H-35.913V43.944z" opacity="0.6"></path>
+                <path class="deco-layer deco-layer--2" d="M-35.667,44.628c0,0,42.91-34.463,87.51-14.191c77.31,35.141,113.304-1.952,146.639-4.729&#x000A; c48.653-4.055,69.939,16.218,69.939,16.218v54.396H-35.667V44.628z" opacity="0.6"></path>
+                <path class="deco-layer deco-layer--3" d="M43.415,98.342c0,0,48.283-68.927,109.133-68.927c65.886,0,97.983,67.914,97.983,67.914v3.716&#x000A; H42.401L43.415,98.342z" opacity="0.7"></path>
+                <path class="deco-layer deco-layer--4" d="M-34.667,62.998c0,0,56-45.667,120.316-27.839C167.484,57.842,197,41.332,232.286,30.428&#x000A; c53.07-16.399,104.047,36.903,104.047,36.903l1.333,36.667l-372-2.954L-34.667,62.998z"></path>
+            </svg>
+            <div class="apr-price">30 <span>000</span><span class="apr-currency">&#8381;</span></div>
+            <div class="apr-title">Enterprise</div>
+        </div>
+        <ul class="apr-feature-list">
+            <li>Полный функционал сервиса</li>
+            <li>Все возможности платформы</li>
+            <li>Высокая скорость работы</li>
+        </ul>
+        <button class="apr-action">Оплатить</button>
+    </div>
+</section>
+
+<div class="card">
+    <img class="cardimage" src="card.svg" alt="SVG Image">
+</div>
+<form id="registration-form" action="/go_to_reg" method="get">
+    <div class="placeholder-form">
+        <div class="placeholder-container">
+            <input type="text" placeholder=" " id="card-number" />
+            <label>Card Number</label>
+        </div>
+        <div class="placeholder-container">
+            <input type="text" placeholder=" " id="expiry-date" />
+            <label>Date</label>
+        </div>
+        <div class="placeholder-container">
+            <input type="password" placeholder=" " id="cvv" />
+            <label>CVV</label>
+        </div>
+        <button class="butt">Оплатить</button>
+    </div>
+</form>
+<script>
+$(document).ready(function() {
+    $('#logout-form').submit(function(event) {
+        event.preventDefault();
+        $.ajax({
+            url: 'logout',
+            type: 'POST',
+            data: {
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(data) {
+                window.location.replace("{% url 'go_to_auth' %}");
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+});
+</script>
+<script>
+    // Валидация даты
+    let expiryDateInput = document.getElementById('expiry-date');
+    expiryDateInput.addEventListener('input', function(event) {
+        let date = event.target.value;
+        // Удаление всех символов, кроме цифр
+        date = date.replace(/\D/g, '');
+        // Ограничение длины до 5 символов
+        date = date.substring(0, 4);
+        // Вставка пробелов после каждых 2 цифр
+        date = date.replace(/(\d{2})(\d{1,2})/, '$1/$2').trim();
+        event.target.value = date;
+    });
+    // Валидация CVV
+    let cvvInput = document.getElementById('cvv');
+    cvvInput.addEventListener('input', function(event) {
+        let cvv = event.target.value;
+        // Удаление всех символов, кроме цифр и ограничение длины до 3 символов
+        cvv = cvv.replace(/\D/g, '').substring(0, 3);
+        event.target.value = cvv;
+    });
+
+    // Валидация номера карты
+    let cardNumberInput = document.getElementById('card-number');
+    cardNumberInput.addEventListener('input', function(event) {
+        let cardNumber = event.target.value;
+        // Удаление всех символов, кроме цифр и ограничение длины до 20 символов
+        cardNumber = cardNumber.replace(/\D/g, '').substring(0, 20);
+        event.target.value = cardNumber;
+    });
+</script>
+
+</body>
+</html>

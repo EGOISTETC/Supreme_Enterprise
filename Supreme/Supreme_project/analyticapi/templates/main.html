@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+</head>
+<body>
+<div class="header">
+    <div class="logo">
+        <img src="{% static 'frame1986.png' %}" alt="logo" width="100" height="50" />
+    </div>
+    <div class="search">
+        <input type="sumbit" placeholder="Search..." />
+        <button>Найти</button>
+    </div>
+    <div class="auth" id="auth-buttons">
+      {% if user %}
+        <a href="cabinet" class="authbutton-link">
+    <span id="user-login" class="authbutton2">{{ user.Login }}</span>
+        </a>
+    <form action="/logout" method="post" id="logout-form">
+        {% csrf_token %}
+        <button type="submit" class="logoutbutton">Выход</button>
+    </form>
+{% else %}
+    <script>
+        window.location.replace("{% url 'go_to_auth' %}");
+    </script>
+{% endif %}
+    </div>
+</div>
+
+<div class="container">
+    <div class="sidebar">
+        <h1 class="top-text">ОСНОВНОЕ</h1>
+        <ul class="textmenu">
+            <li><a href="cabinet?session_key={{ request.session.session_key }}">Работа с сервисом</a></li>
+            <li><a href="redirect_services?session_key={{ request.session.session_key }}">Сервисы</a></li>
+            <li><a href="pay?session_key={{ request.session.session_key }}">Тарифы и оплата</a></li>
+            <li><a href="pay?session_key={{ request.session.session_key }}">Аналитика</a></li>
+        </ul>
+        <h1 class="suppport">ДОПОЛНИТЕЛЬНО</h1>
+        <ul class="textmen">
+            <li><a href="#">Поддержка</a></li>
+        </ul>
+    </div>
+
+    <div class="content">
+        <h2 class="razblock">Разблокируйте премиальный тариф для бизнеса</h2>
+        <p class="supp">Расширенная поддержка и больше возможностей</p>
+        <button class="mainbutton">Обновить</button>
+    </div>
+
+</div>
+
+<div class="undercontent">
+    <p class="under">Сообщения</p>
+    <h2 class="sms" id="messages-count"></h2>
+    <button class="underbutton">+45%</button>
+    <p class="textunder">From 4,6%</p>
+</div>
+
+<div class="undercontent2">
+  <p class="under2">Пользователи</p>
+    <h2 class="sms3" id="count_members"></h2>
+  <button class="underbutton2">-1,7%</button>
+  <p class="textunder2">From 4,6%</p>
+</div>
+
+<div class="undercontent3">
+    <p class="under3">Ключевые совпадения</p>
+    <h2 class="sms3" id="keyword-matches"></h2>
+    <button class="underbutton3">0,0%</button>
+    <p class="textunder3">From 1,6%</p>
+</div>
+
+<div class="undercontent4">
+    <p class="under4">Релевантность</p>
+    <h2 class="sms4" id="relevance"></h2>
+    <button class="underbutton4">+0,6%</button>
+    <p class="textunder4">From 4,6%</p>
+</div>
+<script>
+    $(document).ready(function() {
+        $('#logout-btn').click(function() {
+            $.ajax({
+                url: '/logout/',
+                type: 'POST',
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function(data) {
+                    // Redirect to authentication page after successful logout
+                    window.location.replace("{% url 'go_to_auth' %}");
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                    // Handle error here
+                }
+            });
+        });
+    });
+</script>
+<script>
+    // Функция для отправки AJAX-запроса на получение данных аналитики
+    function getAnalyticsData() {
+        $.ajax({
+            url: '/analytics/',
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                // Обновляем информацию на странице
+                $('#messages-count').text(data[0].messages_count);
+                $('#keyword-matches').text(data[0].keyword_matches);
+                $('#relevance').text(data[0].relevance);
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+    // Вызываем функцию сразу и затем каждую секунду
+    $(document).ready(function() {
+        getAnalyticsData(); // Вызываем функцию сразу при загрузке страницы
+        setInterval(getAnalyticsData, 5000); // Вызываем каждую секунду
+    });
+</script>
+
+
+
+<div class="analytic">
+  <p class="under9">Аналитика</p>
+    <canvas id="analytics-chart"></canvas>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // Глобальная переменная для хранения текущего экземпляра графика
+var chart;
+
+// Функция для отрисовки графика
+function drawChart(data) {
+    var ctx = document.getElementById('analytics-chart').getContext('2d');
+
+    // Удаляем предыдущий график, если он существует
+    if (chart) {
+        chart.destroy();
+    }
+
+    // Создаем новый экземпляр графика
+    chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Сообщения', 'Пользователи', 'Ключевые совпадения', 'Релевантность'],
+            datasets: [{
+                label: 'Данные аналитики',
+                data: [data.messages_count, data.members_count, data.keyword_matches, data.relevance],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
+
+// Функция для получения данных аналитики и отрисовки графика
+function getAnalyticsData() {
+    $.ajax({
+        url: '/analytics/',
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            // Обновляем информацию на странице
+            $('#messages-count').text(data[0].messages_count);
+            $('#count_members').text(data[0].members_count);
+            $('#keyword-matches').text(data[0].keyword_matches);
+            $('#relevance').text(data[0].relevance);
+
+            // Рисуем график
+            drawChart(data[0]);
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+        }
+    });
+}
+
+// Вызываем функцию сразу и затем каждую секунду
+$(document).ready(function() {
+    getAnalyticsData(); // Вызываем функцию сразу при загрузке страницы
+    setInterval(getAnalyticsData, 5000); // Вызываем каждую секунду
+});
+</script>
+
+<div class="working">
+  <p class="under111"></p>
+  <p class="under10">Сервисы в работе</p>
+  <p class="under11">Сервис</p>
+</div>
+
+<script>
+    window.onload = function() {
+        var sessionKey = new URLSearchParams(window.location.search).get('session_key');
+        if (sessionKey) {
+            // Session key is present, show user information and logout button
+            document.getElementById('login-btn').style.display = 'none';
+            document.getElementById('registration-btn').style.display = 'none';
+            document.getElementById('user-login').innerHTML = 'User Login'; // Set user's login
+            document.getElementById('logout-btn').style.display = 'block'; // Show logout button
+        } else {
+            // Session key is not present, show registration and login buttons
+            document.getElementById('logout-btn').style.display = 'none';
+            document.getElementById('user-login').innerHTML = ''; // Clear user's login
+            document.getElementById('login-btn').style.display = 'block';
+            document.getElementById('registration-btn').style.display = 'block';
+        }
+    };
+</script>
+
+</body>
+</html>
