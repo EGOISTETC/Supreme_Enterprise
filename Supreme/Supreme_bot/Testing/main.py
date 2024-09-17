@@ -9,7 +9,7 @@ from peewee import Model, SqliteDatabase, CharField, BooleanField, DateTimeField
 import json
 from datetime import datetime
 
-TOKEN = "6398235699:AAHTqX4ogHVyKaD0lle6ROCOE9Bfaf5QYBI"
+TOKEN = ""
 bot = TeleBot(TOKEN)
 parse_running = True
 commands_list = [
